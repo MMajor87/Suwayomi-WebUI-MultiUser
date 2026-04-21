@@ -7,11 +7,17 @@
  */
 
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { requestManager } from '@/lib/requests/RequestManager.ts';
 import { AuthManager } from '@/features/authentication/AuthManager.ts';
 import { UserRole } from '@/lib/graphql/generated/graphql.ts';
+import { makeToast } from '@/base/utils/Toast.ts';
+import { AppRoutes } from '@/base/AppRoute.constants.ts';
 
 export const UserIdentityLoader = () => {
+    const { t } = useTranslation();
+    const navigate = useNavigate();
     const { accessToken } = AuthManager.useSession();
 
     const { data } = requestManager.useGetMe({ skip: !accessToken });
@@ -21,7 +27,15 @@ export const UserIdentityLoader = () => {
             return;
         }
 
-        const { id, username, role } = data.me;
+        const { id, username, role, isActive } = data.me;
+
+        if (!isActive) {
+            makeToast(t('settings.account.label.inactive_warning'), 'error');
+            AuthManager.removeTokens();
+            navigate(AppRoutes.authentication.childRoutes.login.path, { replace: true });
+            return;
+        }
+
         AuthManager.setUserIdentity(id, username, role as UserRole);
     }, [data?.me]);
 

@@ -22,6 +22,8 @@ import SyncIcon from '@mui/icons-material/Sync';
 import PaletteIcon from '@mui/icons-material/Palette';
 import HistoryIcon from '@mui/icons-material/History';
 import ImageIcon from '@mui/icons-material/Image';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Divider from '@mui/material/Divider';
 import { ListItemLink } from '@/base/components/lists/ListItemLink.tsx';
 import { AppRoutes } from '@/base/AppRoute.constants.ts';
 import { useAppTitle } from '@/features/navigation-bar/hooks/useAppTitle.ts';
@@ -33,6 +35,13 @@ export function Settings() {
 
     return (
         <List sx={{ padding: 0 }}>
+            <ListItemLink to={AppRoutes.settings.childRoutes.account.path}>
+                <ListItemIcon>
+                    <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary={t('settings.account.title')} />
+            </ListItemLink>
+            <Divider />
             <ListItemLink to={AppRoutes.settings.childRoutes.appearance.path}>
                 <ListItemIcon>
                     <PaletteIcon />

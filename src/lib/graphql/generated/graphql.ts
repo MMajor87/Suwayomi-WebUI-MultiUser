@@ -4178,3 +4178,10 @@ export type GetMeQuery = { __typename?: 'Query', me: { __typename?: 'UserAccount
 export type UserLogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type UserLogoutMutation = { __typename?: 'Mutation', logout: { __typename?: 'LogoutPayload', success: boolean } };
+
+export type ChangePasswordMutationVariables = Exact<{
+  currentPassword: Scalars['String']['input'];
+  newPassword: Scalars['String']['input'];
+}>;
+
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename?: 'ChangePasswordPayload', success: boolean } };

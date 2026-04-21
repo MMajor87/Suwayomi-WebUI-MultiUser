@@ -123,6 +123,10 @@ export const AppRoutes = {
                 match: 'history',
                 path: '/settings/history',
             },
+            account: {
+                match: 'account',
+                path: '/settings/account',
+            },
         },
     },
     sources: {

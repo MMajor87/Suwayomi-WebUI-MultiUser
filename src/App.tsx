@@ -92,6 +92,7 @@ const { GlobalReaderSettings } = loadable(
 const { More } = loadable(() => import('@/features/settings/screens/More.tsx'), lazyLoadFallback);
 const { Reader } = loadable(() => import('@/features/reader/screens/Reader.tsx'), lazyLoadFallback);
 const { HistorySettings } = loadable(() => import('@/features/history/screens/HistorySettings.tsx'), lazyLoadFallback);
+const { AccountSettings } = loadable(() => import('@/features/user/screens/AccountSettings.tsx'), lazyLoadFallback);
 
 if (import.meta.env.DEV) {
     // Adds messages only in a dev environment
@@ -266,6 +267,7 @@ const MainApp = () => {
                                 element={<TrackingSettings />}
                             />
                             <Route path={AppRoutes.settings.childRoutes.appearance.match} element={<Appearance />} />
+                            <Route path={AppRoutes.settings.childRoutes.account.match} element={<AccountSettings />} />
                         </Route>
 
                         {/* Manga Routes */}

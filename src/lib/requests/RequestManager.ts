@@ -222,6 +222,8 @@ import {
     GetMeQueryVariables,
     UserLogoutMutation,
     UserLogoutMutationVariables,
+    ChangePasswordMutation,
+    ChangePasswordMutationVariables,
     CreateBackupInput,
     CreateBackupMutation,
     CreateBackupMutationVariables,
@@ -348,7 +350,7 @@ import { CHAPTER_META_FIELDS } from '@/lib/graphql/chapter/ChapterFragments.ts';
 import { MetadataMigrationSettings } from '@/features/migration/Migration.types.ts';
 import { MangaIdInfo } from '@/features/manga/Manga.types.ts';
 import { updateMetadataList } from '@/features/metadata/services/MetadataApolloCacheHandler.ts';
-import { USER_LOGIN, USER_REFRESH, USER_LOGOUT } from '@/lib/graphql/user/UserMutation.ts';
+import { USER_LOGIN, USER_REFRESH, USER_LOGOUT, CHANGE_PASSWORD } from '@/lib/graphql/user/UserMutation.ts';
 import { GET_ME } from '@/lib/graphql/user/UserQuery.ts';
 import { AuthManager } from '@/features/authentication/AuthManager.ts';
 import { useLocalStorage } from '@/base/hooks/useStorage.tsx';
@@ -3389,6 +3391,12 @@ export class RequestManager {
         options?: MutationHookOptions<UserLogoutMutation, UserLogoutMutationVariables>,
     ): AbortableApolloUseMutationResponse<UserLogoutMutation, UserLogoutMutationVariables> {
         return this.doRequest(GQLMethod.USE_MUTATION, USER_LOGOUT, undefined, options);
+    }
+
+    public useChangePassword(
+        options?: MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>,
+    ): AbortableApolloUseMutationResponse<ChangePasswordMutation, ChangePasswordMutationVariables> {
+        return this.doRequest(GQLMethod.USE_MUTATION, CHANGE_PASSWORD, undefined, options);
     }
 
     public useKoSyncStatus(
