@@ -9,7 +9,7 @@ module.exports = {
         'header',
     ],
     parserOptions: {
-        project: ['./tsconfig.json', './tsconfig.node.json', './tools/scripts/tsconfig.json'],
+        project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.e2e.json', './tools/scripts/tsconfig.json'],
     },
     overrides: [
         {
@@ -98,6 +98,19 @@ module.exports = {
             files: ['tools/scripts/**/*'],
             rules: {
                 'no-relative-import-paths/no-relative-import-paths': 'off',
+                'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+            },
+        },
+        {
+            files: ['src/test/**/*', 'e2e/**/*'],
+            rules: {
+                'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+            },
+        },
+        {
+            files: ['*.config.ts', '*.config.js'],
+            rules: {
+                'import/no-default-export': 'off',
                 'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
             },
         },
