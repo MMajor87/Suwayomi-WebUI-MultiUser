@@ -4156,4 +4156,25 @@ export type UserRefreshMutationVariables = Exact<{
 }>;
 
 
-export type UserRefreshMutation = { __typename?: 'Mutation', refreshToken: { __typename?: 'RefreshTokenPayload', accessToken: string } };
+export type UserRefreshMutation = { __typename?: 'Mutation', refreshToken: { __typename?: 'RefreshTokenPayload', accessToken: string, refreshToken: string } };
+
+export enum UserRole {
+  Admin = 'ADMIN',
+  User = 'USER'
+}
+
+export type UserAccount = {
+  __typename?: 'UserAccount';
+  id: number;
+  username: string;
+  role: UserRole;
+  isActive: boolean;
+};
+
+export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
+
+export type GetMeQuery = { __typename?: 'Query', me: { __typename?: 'UserAccount', id: number, username: string, role: UserRole, isActive: boolean } };
+
+export type UserLogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+export type UserLogoutMutation = { __typename?: 'Mutation', logout: { __typename?: 'LogoutPayload', success: boolean } };

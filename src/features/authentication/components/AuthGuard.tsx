@@ -21,7 +21,7 @@ export const AuthGuard = ({ children }: { children: ReactNode }) => {
                 return;
             }
 
-            AuthManager.setAuthRequired(false);
+            AuthManager.setAuthRequired(true);
             AuthManager.setAuthInitialized(true);
             requestManager.processQueues();
         },

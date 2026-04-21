@@ -72,7 +72,7 @@ export abstract class BaseClient<Client, ClientConfig, Fetcher> {
                 throw new Error('No refreshed access token returned');
             }
 
-            AuthManager.setAccessToken(data.refreshToken.accessToken);
+            AuthManager.setTokens(data.refreshToken.accessToken, data.refreshToken.refreshToken);
 
             BaseClient.onTokenRefreshComplete?.();
 

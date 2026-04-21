@@ -21,6 +21,15 @@ export const USER_REFRESH = gql`
     mutation USER_REFRESH($refreshToken: String!) {
         refreshToken(input: { refreshToken: $refreshToken }) {
             accessToken
+            refreshToken
+        }
+    }
+`;
+
+export const USER_LOGOUT = gql`
+    mutation USER_LOGOUT {
+        logout(input: {}) {
+            success
         }
     }
 `;

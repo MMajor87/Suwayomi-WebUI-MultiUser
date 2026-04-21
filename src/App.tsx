@@ -27,6 +27,7 @@ import { MediaQuery } from '@/base/utils/MediaQuery.tsx';
 import { BrowseTab } from '@/features/browse/Browse.types.ts';
 import { LoginPage } from '@/features/authentication/screens/LoginPage.tsx';
 import { AuthGuard } from '@/features/authentication/components/AuthGuard.tsx';
+import { UserIdentityLoader } from '@/features/authentication/components/UserIdentityLoader.tsx';
 import { SearchParam } from '@/base/Base.types.ts';
 import { defaultPromiseErrorHandler } from '@/lib/DefaultPromiseErrorHandler.ts';
 import { ReactRouter } from '@/lib/react-router/ReactRouter.ts';
@@ -321,6 +322,7 @@ export const App: React.FC = () => (
         <AwaitableComponent.Root />
 
         <AuthGuard>
+            <UserIdentityLoader />
             <ServerUpdateChecker />
             <WebUIUpdateChecker />
             <InitialBackgroundRequests />

@@ -8,6 +8,7 @@
 
 import { useMemo, useSyncExternalStore } from 'react';
 import { AppStorage } from '@/lib/storage/AppStorage.ts';
+import { UserRole } from '@/lib/graphql/generated/graphql.ts';
 
 let notifierValue = 0;
 
@@ -25,6 +26,12 @@ export class AuthManager {
     private static authRequired: boolean | null = null;
 
     private static refreshingToken: boolean = false;
+
+    private static userId: number | null = null;
+
+    private static username: string | null = null;
+
+    private static role: UserRole | null = null;
 
     private static subscribe(callback: () => void): () => void {
         // eslint-disable-next-line no-plusplus
@@ -49,6 +56,9 @@ export class AuthManager {
         isAuthRequired: typeof AuthManager.authRequired;
         isInitialized: typeof AuthManager.authInitialized;
         isRefreshingToken: typeof AuthManager.refreshingToken;
+        userId: typeof AuthManager.userId;
+        username: typeof AuthManager.username;
+        role: typeof AuthManager.role;
     } {
         useSyncExternalStore(AuthManager.subscribe.bind(AuthManager), () => notifierValue);
 
@@ -59,6 +69,9 @@ export class AuthManager {
                 isAuthRequired: AuthManager.authRequired,
                 isInitialized: AuthManager.authInitialized,
                 isRefreshingToken: AuthManager.refreshingToken,
+                userId: AuthManager.userId,
+                username: AuthManager.username,
+                role: AuthManager.role,
             }),
             [
                 AuthManager.accessToken,
@@ -66,6 +79,9 @@ export class AuthManager {
                 AuthManager.authRequired,
                 AuthManager.authInitialized,
                 AuthManager.refreshingToken,
+                AuthManager.userId,
+                AuthManager.username,
+                AuthManager.role,
             ],
         );
     }
@@ -146,6 +162,37 @@ export class AuthManager {
     static removeTokens(): void {
         AuthManager.removeAccessToken();
         AuthManager.removeRefreshToken();
+        AuthManager.clearUserIdentity();
+    }
+
+    static getUserId(): number | null {
+        return AuthManager.userId;
+    }
+
+    static getUsername(): string | null {
+        return AuthManager.username;
+    }
+
+    static getRole(): UserRole | null {
+        return AuthManager.role;
+    }
+
+    static isAdmin(): boolean {
+        return AuthManager.role === UserRole.Admin;
+    }
+
+    static setUserIdentity(id: number, username: string, role: UserRole): void {
+        AuthManager.userId = id;
+        AuthManager.username = username;
+        AuthManager.role = role;
+        AuthManager.notify();
+    }
+
+    static clearUserIdentity(): void {
+        AuthManager.userId = null;
+        AuthManager.username = null;
+        AuthManager.role = null;
+        AuthManager.notify();
     }
 
     static shouldQueueRequests(): boolean {
