@@ -45,6 +45,7 @@ import { AuthManager } from '@/features/authentication/AuthManager.ts';
 import { UserRole } from '@/lib/graphql/generated/graphql.ts';
 import { EmptyViewAbsoluteCentered } from '@/base/components/feedback/EmptyViewAbsoluteCentered.tsx';
 import { LoadingPlaceholder } from '@/base/components/feedback/LoadingPlaceholder.tsx';
+import { requestManager } from '@/lib/requests/RequestManager.ts';
 import { defaultPromiseErrorHandler } from '@/lib/DefaultPromiseErrorHandler.ts';
 import { dateTimeFormatter } from '@/base/utils/DateHelper.ts';
 import { getErrorMessage } from '@/lib/HelperFunctions.ts';
@@ -163,32 +164,44 @@ export const UserManagementPanel = () => {
     const [deleteTarget, setDeleteTarget] = useState<UserAccountItem | null>(null);
     const [deleteError, setDeleteError] = useState<string | null>(null);
 
+    const apolloClient = requestManager.graphQLClient.client;
+
     const {
         data,
         loading,
         error,
         refetch: refetchUsers,
     } = useQuery<GetUsersResponse, GetUsersVariables>(GET_USERS, {
+        client: apolloClient,
         variables: { includeInactive: true },
         notifyOnNetworkStatusChange: true,
         skip: !isAdmin,
     });
 
-    const [createUser, { loading: isCreatingUser }] = useMutation<CreateUserResponse, CreateUserVariables>(CREATE_USER);
-    const [updateUser, { loading: isUpdatingUser }] = useMutation<UpdateUserResponse, UpdateUserVariables>(UPDATE_USER);
+    const [createUser, { loading: isCreatingUser }] = useMutation<CreateUserResponse, CreateUserVariables>(
+        CREATE_USER,
+        { client: apolloClient },
+    );
+    const [updateUser, { loading: isUpdatingUser }] = useMutation<UpdateUserResponse, UpdateUserVariables>(
+        UPDATE_USER,
+        { client: apolloClient },
+    );
     const [deactivateUser, { loading: isDeactivatingUser }] = useMutation<
         { deactivateUser: { user: UserAccountItem } },
         ToggleUserVariables
-    >(DEACTIVATE_USER);
+    >(DEACTIVATE_USER, { client: apolloClient });
     const [reactivateUser, { loading: isReactivatingUser }] = useMutation<
         { reactivateUser: { user: UserAccountItem } },
         ToggleUserVariables
-    >(REACTIVATE_USER);
+    >(REACTIVATE_USER, { client: apolloClient });
     const [forceSignOutUser, { loading: isForceSignOutLoading }] = useMutation<
         ForceSignOutResponse,
         ToggleUserVariables
-    >(FORCE_SIGN_OUT_USER);
-    const [deleteUser, { loading: isDeletingUser }] = useMutation<DeleteUserResponse, ToggleUserVariables>(DELETE_USER);
+    >(FORCE_SIGN_OUT_USER, { client: apolloClient });
+    const [deleteUser, { loading: isDeletingUser }] = useMutation<DeleteUserResponse, ToggleUserVariables>(
+        DELETE_USER,
+        { client: apolloClient },
+    );
 
     const users = useMemo(
         () => [...(data?.users ?? [])].sort((first, second) => first.username.localeCompare(second.username)),

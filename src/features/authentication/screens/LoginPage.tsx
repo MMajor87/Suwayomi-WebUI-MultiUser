@@ -45,6 +45,7 @@ export const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const { data: needsSetupData, loading: isCheckingSetup } = useQuery<NeedsSetupQueryResponse>(GET_NEEDS_SETUP, {
+        client: requestManager.graphQLClient.client,
         fetchPolicy: 'network-only',
         nextFetchPolicy: 'network-only',
         skip: isAuthenticated,

@@ -8,7 +8,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useMutation, useQuery, useApolloClient } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
@@ -22,6 +22,7 @@ import { AppRoutes } from '@/base/AppRoute.constants.ts';
 import { makeToast } from '@/base/utils/Toast.ts';
 import { getErrorMessage } from '@/lib/HelperFunctions.ts';
 import { SplashScreen } from '@/features/authentication/components/SplashScreen.tsx';
+import { requestManager } from '@/lib/requests/RequestManager.ts';
 import { useNavBarContext } from '@/features/navigation-bar/NavbarContext.tsx';
 import { GET_NEEDS_SETUP } from '@/lib/graphql/server/ServerInfoQuery.ts';
 import { SETUP_INITIAL_ADMIN } from '@/lib/graphql/user/UserMutation.ts';
@@ -56,7 +57,7 @@ export const SetupScreen = () => {
     const { t } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
-    const client = useApolloClient();
+    const { client } = requestManager.graphQLClient;
     const { setOverride } = useNavBarContext();
     const isAuthenticated = AuthManager.useIsAuthenticated();
 
@@ -66,6 +67,7 @@ export const SetupScreen = () => {
     const [formError, setFormError] = useState<string | null>(null);
 
     const { data, loading: isCheckingSetup } = useQuery<NeedsSetupQueryResponse>(GET_NEEDS_SETUP, {
+        client,
         fetchPolicy: 'network-only',
         nextFetchPolicy: 'network-only',
         skip: isAuthenticated,
@@ -73,7 +75,7 @@ export const SetupScreen = () => {
     const [setupInitialAdmin, { loading: isSubmitting }] = useMutation<
         SetupInitialAdminMutationResponse,
         SetupInitialAdminMutationVariables
-    >(SETUP_INITIAL_ADMIN);
+    >(SETUP_INITIAL_ADMIN, { client });
 
     const redirectSearch = useMemo(() => location.search, [location.search]);
 
