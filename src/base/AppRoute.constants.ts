@@ -37,6 +37,10 @@ export const AppRoutes = {
                 match: 'login',
                 path: '/auth/login',
             },
+            setup: {
+                match: 'setup',
+                path: '/auth/setup',
+            },
         },
     },
     about: {
@@ -126,6 +130,10 @@ export const AppRoutes = {
             account: {
                 match: 'account',
                 path: '/settings/account',
+            },
+            users: {
+                match: 'users',
+                path: '/settings/users',
             },
         },
     },

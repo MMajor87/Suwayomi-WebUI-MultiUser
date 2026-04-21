@@ -26,6 +26,7 @@ import { useMetadataServerSettings } from '@/features/settings/services/ServerSe
 import { MediaQuery } from '@/base/utils/MediaQuery.tsx';
 import { BrowseTab } from '@/features/browse/Browse.types.ts';
 import { LoginPage } from '@/features/authentication/screens/LoginPage.tsx';
+import { SetupScreen } from '@/features/authentication/screens/SetupScreen.tsx';
 import { AuthGuard } from '@/features/authentication/components/AuthGuard.tsx';
 import { UserIdentityLoader } from '@/features/authentication/components/UserIdentityLoader.tsx';
 import { SearchParam } from '@/base/Base.types.ts';
@@ -93,6 +94,10 @@ const { More } = loadable(() => import('@/features/settings/screens/More.tsx'), 
 const { Reader } = loadable(() => import('@/features/reader/screens/Reader.tsx'), lazyLoadFallback);
 const { HistorySettings } = loadable(() => import('@/features/history/screens/HistorySettings.tsx'), lazyLoadFallback);
 const { AccountSettings } = loadable(() => import('@/features/user/screens/AccountSettings.tsx'), lazyLoadFallback);
+const { UserManagementPanel } = loadable(
+    () => import('@/features/user/screens/UserManagementPanel.tsx'),
+    lazyLoadFallback,
+);
 
 if (import.meta.env.DEV) {
     // Adds messages only in a dev environment
@@ -198,6 +203,7 @@ const MainApp = () => {
                 <Routes>
                     <Route path={AppRoutes.authentication.match}>
                         <Route path={AppRoutes.authentication.childRoutes.login.match} element={<LoginPage />} />
+                        <Route path={AppRoutes.authentication.childRoutes.setup.match} element={<SetupScreen />} />
                     </Route>
 
                     <Route element={<PrivateRoutes />}>
@@ -268,6 +274,10 @@ const MainApp = () => {
                             />
                             <Route path={AppRoutes.settings.childRoutes.appearance.match} element={<Appearance />} />
                             <Route path={AppRoutes.settings.childRoutes.account.match} element={<AccountSettings />} />
+                            <Route
+                                path={AppRoutes.settings.childRoutes.users.match}
+                                element={<UserManagementPanel />}
+                            />
                         </Route>
 
                         {/* Manga Routes */}

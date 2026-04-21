@@ -18,3 +18,15 @@ export const GET_ME = gql`
         }
     }
 `;
+
+export const GET_USERS = gql`
+    query GET_USERS($includeInactive: Boolean!) {
+        users(includeInactive: $includeInactive) {
+            id
+            username
+            role
+            isActive
+            createdAt
+        }
+    }
+`;

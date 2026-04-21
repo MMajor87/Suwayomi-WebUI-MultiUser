@@ -41,3 +41,88 @@ export const CHANGE_PASSWORD = gql`
         }
     }
 `;
+
+export const SETUP_INITIAL_ADMIN = gql`
+    mutation SETUP_INITIAL_ADMIN($input: SetupInitialAdminInput!) {
+        setupInitialAdmin(input: $input) {
+            user {
+                id
+                username
+                role
+                isActive
+            }
+        }
+    }
+`;
+
+export const CREATE_USER = gql`
+    mutation CREATE_USER($input: CreateUserInput!) {
+        createUser(input: $input) {
+            user {
+                id
+                username
+                role
+                isActive
+                createdAt
+            }
+        }
+    }
+`;
+
+export const UPDATE_USER = gql`
+    mutation UPDATE_USER($input: UpdateUserInput!) {
+        updateUser(input: $input) {
+            user {
+                id
+                username
+                role
+                isActive
+                createdAt
+            }
+        }
+    }
+`;
+
+export const DEACTIVATE_USER = gql`
+    mutation DEACTIVATE_USER($input: DeactivateUserInput!) {
+        deactivateUser(input: $input) {
+            user {
+                id
+                username
+                role
+                isActive
+                createdAt
+            }
+        }
+    }
+`;
+
+export const REACTIVATE_USER = gql`
+    mutation REACTIVATE_USER($input: ReactivateUserInput!) {
+        reactivateUser(input: $input) {
+            user {
+                id
+                username
+                role
+                isActive
+                createdAt
+            }
+        }
+    }
+`;
+
+export const FORCE_SIGN_OUT_USER = gql`
+    mutation FORCE_SIGN_OUT_USER($input: ForceSignOutUserInput!) {
+        forceSignOutUser(input: $input) {
+            success
+        }
+    }
+`;
+
+export const DELETE_USER = gql`
+    mutation DELETE_USER($input: DeleteUserInput!) {
+        deleteUser(input: $input) {
+            success
+        }
+    }
+`;

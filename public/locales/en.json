@@ -175,6 +175,31 @@
     "value_one": "{{count}} chapter",
     "value_other": "{{count}} chapters"
   },
+  "authentication": {
+    "setup": {
+      "action": {
+        "create_admin": "Create Admin"
+      },
+      "error": {
+        "password_digit_required": "Password must contain at least one digit.",
+        "password_lowercase_required": "Password must contain at least one lowercase character.",
+        "password_required": "Password is required.",
+        "password_too_short": "Password must be at least {{minLength}} characters long.",
+        "password_uppercase_required": "Password must contain at least one uppercase character.",
+        "passwords_do_not_match": "Passwords do not match.",
+        "username_required": "Username is required."
+      },
+      "label": {
+        "confirm_password": "Confirm password",
+        "password_policy": "Use at least {{minLength}} characters with uppercase, lowercase, and a digit."
+      },
+      "subtitle": "Create the initial admin account to finish first-run setup.",
+      "success": {
+        "admin_created": "Admin account created. Please log in."
+      },
+      "title": "First-Run Setup"
+    }
+  },
   "download": {
     "queue": {
       "error": {
@@ -1144,7 +1169,9 @@
       "title": "About",
       "webui": {
         "label": {
+          "build_commit": "Bundled build commit",
           "channel": "$t(settings.webui.title.webui) channel",
+          "flavor": "$t(settings.webui.flavor.label.title)",
           "github": "$t(global.label.github) $t(settings.webui.title.webui)",
           "info": "$t(settings.webui.title.webui) version {{version}} ({{channel}}) available for download",
           "update_failure": "Could not update $t(settings.webui.title.webui)",
@@ -1659,6 +1686,55 @@
         "password_changed": "Password changed. Please log in again."
       },
       "title": "My Account"
+    },
+    "user_management": {
+      "action": {
+        "create_user": "Create User",
+        "deactivate": "Deactivate user",
+        "force_sign_out": "Force sign-out",
+        "reactivate": "Reactivate user"
+      },
+      "dialog": {
+        "create": {
+          "title": "Create User"
+        },
+        "delete": {
+          "message": "Delete user \"{{username}}\"? This cannot be undone.",
+          "title": "Delete User"
+        },
+        "edit": {
+          "title": "Edit User"
+        }
+      },
+      "error": {
+        "admin_only": "Only admins can manage users.",
+        "last_active_admin_guard": "Cannot remove the last active admin user.",
+        "password_digit_required": "Password must contain at least one digit.",
+        "password_lowercase_required": "Password must contain at least one lowercase character.",
+        "password_too_short": "Password must be at least {{minLength}} characters long.",
+        "password_uppercase_required": "Password must contain at least one uppercase character.",
+        "username_required": "Username is required."
+      },
+      "label": {
+        "actions": "Actions",
+        "active": "Active",
+        "created_at": "Created",
+        "inactive": "Inactive",
+        "no_users": "No users found",
+        "password": "Password",
+        "role": "Role",
+        "status": "Status",
+        "username": "Username"
+      },
+      "success": {
+        "user_created": "User created.",
+        "user_deactivated": "User deactivated.",
+        "user_deleted": "User deleted.",
+        "user_reactivated": "User reactivated.",
+        "user_sessions_invalidated": "User sessions invalidated.",
+        "user_updated": "User updated."
+      },
+      "title": "User Management"
     },
     "title": "Settings",
     "webui": {

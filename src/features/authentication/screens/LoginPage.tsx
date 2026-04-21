@@ -8,10 +8,11 @@
 
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { useQuery } from '@apollo/client';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { StringParam, useQueryParam } from 'use-query-params';
 import { PasswordTextField } from '@/base/components/inputs/PasswordTextField.tsx';
@@ -24,11 +25,17 @@ import { useNavBarContext } from '@/features/navigation-bar/NavbarContext.tsx';
 import { SearchParam } from '@/base/Base.types.ts';
 import { SplashScreen } from '@/features/authentication/components/SplashScreen.tsx';
 import { ServerAddressSetting } from '@/features/settings/components/ServerAddressSetting.tsx';
+import { GET_NEEDS_SETUP } from '@/lib/graphql/server/ServerInfoQuery.ts';
+
+type NeedsSetupQueryResponse = {
+    needsSetup: boolean;
+};
 
 export const LoginPage = () => {
     const theme = useTheme();
     const { t } = useTranslation();
     const { setOverride } = useNavBarContext();
+    const location = useLocation();
     const navigate = useNavigate();
     const isAuthenticated = AuthManager.useIsAuthenticated();
 
@@ -37,6 +44,11 @@ export const LoginPage = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const { data: needsSetupData, loading: isCheckingSetup } = useQuery<NeedsSetupQueryResponse>(GET_NEEDS_SETUP, {
+        fetchPolicy: 'network-only',
+        nextFetchPolicy: 'network-only',
+        skip: isAuthenticated,
+    });
 
     const doLogin = async () => {
         try {
@@ -60,6 +72,22 @@ export const LoginPage = () => {
 
     if (isAuthenticated) {
         return <Navigate to={AppRoutes.root.path} replace />;
+    }
+
+    if (isCheckingSetup) {
+        return <SplashScreen />;
+    }
+
+    if (needsSetupData?.needsSetup) {
+        return (
+            <Navigate
+                to={{
+                    pathname: AppRoutes.authentication.childRoutes.setup.path,
+                    search: location.search,
+                }}
+                replace
+            />
+        );
     }
 
     return (
@@ -118,15 +146,22 @@ export const LoginPage = () => {
                             fullWidth
                             variant="standard"
                             onChange={(e) => setUsername(e.target.value)}
+                            inputProps={{ 'data-testid': 'login-username' }}
                         />
                         <PasswordTextField
                             margin="dense"
                             fullWidth
                             variant="standard"
                             onChange={(e) => setPassword(e.target.value)}
+                            inputProps={{ 'data-testid': 'login-password' }}
                         />
                     </Stack>
-                    <Button disabled={isLoading || (!username && !password)} variant="contained" onClick={doLogin}>
+                    <Button
+                        disabled={isLoading || (!username && !password)}
+                        variant="contained"
+                        onClick={doLogin}
+                        data-testid="login-submit"
+                    >
                         {t('global.button.log_in')}
                     </Button>
                     <Stack sx={{ position: 'absolute', left: 0, bottom: 0 }}>

@@ -6,5 +6,7 @@ node_modules/
 
 build/*
 dev-dist/*
+playwright-report/
+test-results/
 
 src/lib/graphql/schema.json

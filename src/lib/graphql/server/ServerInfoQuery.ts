@@ -26,6 +26,12 @@ export const GET_ABOUT = gql`
     }
 `;
 
+export const GET_NEEDS_SETUP = gql`
+    query NEEDS_SETUP {
+        needsSetup
+    }
+`;
+
 export const CHECK_FOR_SERVER_UPDATES = gql`
     query CHECK_FOR_SERVER_UPDATES {
         checkForServerUpdates {

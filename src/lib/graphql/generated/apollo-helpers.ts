@@ -14,9 +14,11 @@ export type AboutServerPayloadFieldPolicy = {
 	revision?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AboutWebUIKeySpecifier = ('channel' | 'tag' | 'updateTimestamp' | AboutWebUIKeySpecifier)[];
+export type AboutWebUIKeySpecifier = ('buildCommit' | 'channel' | 'flavor' | 'tag' | 'updateTimestamp' | AboutWebUIKeySpecifier)[];
 export type AboutWebUIFieldPolicy = {
+	buildCommit?: FieldPolicy<any> | FieldReadFunction<any>,
 	channel?: FieldPolicy<any> | FieldReadFunction<any>,
+	flavor?: FieldPolicy<any> | FieldReadFunction<any>,
 	tag?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateTimestamp?: FieldPolicy<any> | FieldReadFunction<any>
 };

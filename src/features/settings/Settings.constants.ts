@@ -120,6 +120,10 @@ export const AUTH_MODES_SELECT_VALUES: SelectSettingValue<AuthMode>[] = AUTH_MOD
 
 const WEB_UI_FLAVORS = Object.values(WebUiFlavor);
 const WEB_UI_FLAVOR_TO_TRANSLATION_KEY: { [flavor in WebUiFlavor]: SelectSettingValueDisplayInfo } = {
+    [WebUiFlavor.Bundled]: {
+        text: 'settings.webui.channel.option.bundled.label.title',
+        description: 'settings.webui.channel.option.bundled.label.description',
+    },
     [WebUiFlavor.Webui]: {
         text: 'settings.webui.title.webui',
         description: 'settings.webui.flavor.option.webui.label.description',

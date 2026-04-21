@@ -10,8 +10,10 @@ import gql from 'graphql-tag';
 
 export const ABOUT_WEBUI = gql`
     fragment ABOUT_WEBUI on AboutWebUI {
+        flavor
         channel
         tag
+        buildCommit
         updateTimestamp
     }
 `;

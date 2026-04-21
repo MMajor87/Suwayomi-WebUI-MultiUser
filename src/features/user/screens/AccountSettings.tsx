@@ -91,16 +91,9 @@ export const AccountSettings = () => {
 
     return (
         <List sx={{ pt: 0 }}>
-            <List
-                subheader={
-                    <ListSubheader component="div">{t('settings.account.section.profile')}</ListSubheader>
-                }
-            >
+            <List subheader={<ListSubheader component="div">{t('settings.account.section.profile')}</ListSubheader>}>
                 <ListItem>
-                    <ListItemText
-                        primary={t('settings.account.label.username')}
-                        secondary={username ?? '—'}
-                    />
+                    <ListItemText primary={t('settings.account.label.username')} secondary={username ?? '—'} />
                 </ListItem>
                 <ListItem>
                     <ListItemText primary={t('settings.account.label.role')} />
@@ -110,11 +103,7 @@ export const AccountSettings = () => {
 
             <Divider />
 
-            <List
-                subheader={
-                    <ListSubheader component="div">{t('settings.account.section.password')}</ListSubheader>
-                }
-            >
+            <List subheader={<ListSubheader component="div">{t('settings.account.section.password')}</ListSubheader>}>
                 <ListItem>
                     <Stack sx={{ width: '100%', gap: 2, pt: 1 }}>
                         {passwordError && <Alert severity="error">{passwordError}</Alert>}
@@ -124,6 +113,7 @@ export const AccountSettings = () => {
                             fullWidth
                             value={currentPassword}
                             onChange={(e) => setCurrentPassword(e.target.value)}
+                            inputProps={{ 'data-testid': 'account-current-password' }}
                         />
                         <PasswordTextField
                             label={t('settings.account.label.new_password')}
@@ -131,6 +121,7 @@ export const AccountSettings = () => {
                             fullWidth
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
+                            inputProps={{ 'data-testid': 'account-new-password' }}
                         />
                         <PasswordTextField
                             label={t('settings.account.label.confirm_password')}
@@ -138,12 +129,14 @@ export const AccountSettings = () => {
                             fullWidth
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
+                            inputProps={{ 'data-testid': 'account-confirm-password' }}
                         />
                         <Box>
                             <Button
                                 variant="contained"
                                 disabled={!isPasswordFormValid || isChangingPassword}
                                 onClick={handleChangePassword}
+                                data-testid="account-change-password"
                             >
                                 {t('settings.account.action.change_password')}
                             </Button>
@@ -154,12 +147,8 @@ export const AccountSettings = () => {
 
             <Divider />
 
-            <List
-                subheader={
-                    <ListSubheader component="div">{t('settings.account.section.session')}</ListSubheader>
-                }
-            >
-                <ListItemButton onClick={handleSignOutAll} disabled={isLoggingOut}>
+            <List subheader={<ListSubheader component="div">{t('settings.account.section.session')}</ListSubheader>}>
+                <ListItemButton onClick={handleSignOutAll} disabled={isLoggingOut} data-testid="account-signout-all">
                     <LogoutIcon sx={{ mr: 2 }} />
                     <ListItemText
                         primary={t('settings.account.action.sign_out_all')}

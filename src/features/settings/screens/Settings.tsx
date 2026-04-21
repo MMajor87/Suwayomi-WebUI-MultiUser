@@ -24,12 +24,16 @@ import HistoryIcon from '@mui/icons-material/History';
 import ImageIcon from '@mui/icons-material/Image';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { ListItemLink } from '@/base/components/lists/ListItemLink.tsx';
 import { AppRoutes } from '@/base/AppRoute.constants.ts';
 import { useAppTitle } from '@/features/navigation-bar/hooks/useAppTitle.ts';
+import { AuthManager } from '@/features/authentication/AuthManager.ts';
+import { UserRole } from '@/lib/graphql/generated/graphql.ts';
 
 export function Settings() {
     const { t } = useTranslation();
+    const { role } = AuthManager.useSession();
 
     useAppTitle(t('settings.title'));
 
@@ -41,6 +45,14 @@ export function Settings() {
                 </ListItemIcon>
                 <ListItemText primary={t('settings.account.title')} />
             </ListItemLink>
+            {role === UserRole.Admin && (
+                <ListItemLink to={AppRoutes.settings.childRoutes.users.path}>
+                    <ListItemIcon>
+                        <ManageAccountsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={t('settings.user_management.title')} />
+                </ListItemLink>
+            )}
             <Divider />
             <ListItemLink to={AppRoutes.settings.childRoutes.appearance.path}>
                 <ListItemIcon>

@@ -15,7 +15,7 @@ import Divider from '@mui/material/Divider';
 import { requestManager } from '@/lib/requests/RequestManager.ts';
 import { ListItemLink } from '@/base/components/lists/ListItemLink.tsx';
 import { LoadingPlaceholder } from '@/base/components/feedback/LoadingPlaceholder.tsx';
-import { UpdateState } from '@/lib/graphql/generated/graphql.ts';
+import { UpdateState, WebUiFlavor } from '@/lib/graphql/generated/graphql.ts';
 import { defaultPromiseErrorHandler } from '@/lib/DefaultPromiseErrorHandler.ts';
 import { EmptyViewAbsoluteCentered } from '@/base/components/feedback/EmptyViewAbsoluteCentered.tsx';
 import { VersionInfo } from '@/features/app-updates/components/VersionInfo.tsx';
@@ -71,6 +71,10 @@ export function About() {
     const isServerUpdateAvailable =
         !!selectedServerChannelInfo?.tag && selectedServerChannelInfo.tag !== aboutServer.version;
     const isWebUIUpdateAvailable = !!webUIUpdateData?.checkForWebUIUpdate.updateAvailable;
+    const webUIFlavorLabel =
+        aboutWebUI.flavor === WebUiFlavor.Bundled
+            ? t('settings.webui.channel.option.bundled.label.title')
+            : aboutWebUI.flavor.toLocaleUpperCase();
 
     return (
         <List sx={{ pt: 0 }}>
@@ -127,6 +131,9 @@ export function About() {
                     />
                 </ListItem>
                 <ListItem>
+                    <ListItemText primary={t('settings.about.webui.label.flavor')} secondary={webUIFlavorLabel} />
+                </ListItem>
+                <ListItem>
                     <ListItemText
                         primary={t('settings.about.webui.label.version')}
                         secondary={
@@ -145,6 +152,12 @@ export function About() {
                                 updateState={webUIUpdateState}
                             />
                         }
+                    />
+                </ListItem>
+                <ListItem>
+                    <ListItemText
+                        primary={t('settings.about.webui.label.build_commit')}
+                        secondary={aboutWebUI.buildCommit}
                     />
                 </ListItem>
             </List>

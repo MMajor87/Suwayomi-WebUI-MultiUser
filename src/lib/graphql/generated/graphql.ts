@@ -32,7 +32,9 @@ export type AboutServerPayload = {
 
 export type AboutWebUi = {
   __typename?: 'AboutWebUI';
+  buildCommit: Scalars['String']['output'];
   channel: WebUiChannel;
+  flavor: WebUiFlavor;
   tag: Scalars['String']['output'];
   updateTimestamp: Scalars['LongString']['output'];
 };
@@ -3190,6 +3192,7 @@ export enum WebUiChannel {
 }
 
 export enum WebUiFlavor {
+  Bundled = 'BUNDLED',
   Custom = 'CUSTOM',
   Vui = 'VUI',
   Webui = 'WEBUI'
@@ -3886,7 +3889,7 @@ export type GetGlobalMetadatasQueryVariables = Exact<{
 
 export type GetGlobalMetadatasQuery = { __typename?: 'Query', metas: { __typename?: 'GlobalMetaNodeList', totalCount: number, nodes: Array<{ __typename?: 'GlobalMetaType', key: string, value: string }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } };
 
-export type AboutWebuiFragment = { __typename?: 'AboutWebUI', channel: WebUiChannel, tag: string, updateTimestamp: string };
+export type AboutWebuiFragment = { __typename?: 'AboutWebUI', flavor: WebUiFlavor, channel: WebUiChannel, tag: string, buildCommit: string, updateTimestamp: string };
 
 export type WebuiUpdateCheckFragment = { __typename?: 'WebUIUpdateCheck', channel: WebUiChannel, tag: string, updateAvailable: boolean };
 
@@ -3909,7 +3912,7 @@ export type ResetWebuiUpdateStatusMutation = { __typename?: 'Mutation', resetWeb
 export type GetAboutQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAboutQuery = { __typename?: 'Query', aboutServer: { __typename?: 'AboutServerPayload', buildTime: string, buildType: string, discord: string, github: string, name: string, version: string }, aboutWebUI: { __typename?: 'AboutWebUI', channel: WebUiChannel, tag: string, updateTimestamp: string } };
+export type GetAboutQuery = { __typename?: 'Query', aboutServer: { __typename?: 'AboutServerPayload', buildTime: string, buildType: string, discord: string, github: string, name: string, version: string }, aboutWebUI: { __typename?: 'AboutWebUI', flavor: WebUiFlavor, channel: WebUiChannel, tag: string, buildCommit: string, updateTimestamp: string } };
 
 export type CheckForServerUpdatesQueryVariables = Exact<{ [key: string]: never; }>;
 

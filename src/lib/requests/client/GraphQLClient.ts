@@ -242,7 +242,7 @@ export class GraphQLClient extends BaseClient<
     }
 
     protected override shouldQueueRequest(operationName: string | undefined): boolean {
-        const authOperations = ['GET_ABOUT', 'USER_LOGIN', 'USER_REFRESH'];
+        const authOperations = ['GET_ABOUT', 'NEEDS_SETUP', 'USER_LOGIN', 'USER_REFRESH', 'SETUP_INITIAL_ADMIN'];
         if (authOperations.includes(operationName!)) {
             return false;
         }
