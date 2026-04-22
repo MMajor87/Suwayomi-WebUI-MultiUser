@@ -2190,13 +2190,19 @@ export class RequestManager {
         patch: { updateManga: UpdateMangaPatchInput; updateMangaCategories?: UpdateMangaCategoriesPatchInput },
         options?: MutationOptions<UpdateMangaMutation, UpdateMangaMutationVariables>,
     ): AbortableApolloMutationResponse<UpdateMangaMutation> {
+        const hasCategoryChanges =
+            !!patch.updateMangaCategories &&
+            (patch.updateMangaCategories.clearCategories === true ||
+                !!patch.updateMangaCategories.addToCategories?.length ||
+                !!patch.updateMangaCategories.removeFromCategories?.length);
+
         const result = this.doRequest<UpdateMangaMutation, UpdateMangaMutationVariables>(
             GQLMethod.MUTATION,
             UPDATE_MANGA,
             {
                 input: { id, patch: patch.updateManga },
                 updateCategoryInput: { id, patch: patch.updateMangaCategories ?? {} },
-                updateCategories: !!patch.updateMangaCategories,
+                updateCategories: hasCategoryChanges,
             },
             options,
         );
@@ -2214,13 +2220,19 @@ export class RequestManager {
         patch: { updateMangas: UpdateMangaPatchInput; updateMangasCategories?: UpdateMangaCategoriesPatchInput },
         options?: MutationOptions<UpdateMangasMutation, UpdateMangasMutationVariables>,
     ): AbortableApolloMutationResponse<UpdateMangasMutation> {
+        const hasCategoryChanges =
+            !!patch.updateMangasCategories &&
+            (patch.updateMangasCategories.clearCategories === true ||
+                !!patch.updateMangasCategories.addToCategories?.length ||
+                !!patch.updateMangasCategories.removeFromCategories?.length);
+
         const result = this.doRequest<UpdateMangasMutation, UpdateMangasMutationVariables>(
             GQLMethod.MUTATION,
             UPDATE_MANGAS,
             {
                 input: { ids, patch: patch.updateMangas },
                 updateCategoryInput: { ids, patch: patch.updateMangasCategories ?? {} },
-                updateCategories: !!patch.updateMangasCategories,
+                updateCategories: hasCategoryChanges,
             },
             options,
         );

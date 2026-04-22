@@ -53,7 +53,8 @@ export const Manga: React.FC = () => {
     useEffect(() => {
         if (manga == null) return;
 
-        const doFetch = !autofetchedRef.current && !manga.initialized;
+        const shouldAutoFetch = !manga.initialized || manga.chapters.totalCount === 0;
+        const doFetch = !autofetchedRef.current && shouldAutoFetch;
         if (doFetch) {
             autofetchedRef.current = true;
             refresh();

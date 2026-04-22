@@ -12,13 +12,14 @@ import userEvent from '@testing-library/user-event';
 import { SetupScreen } from '@/features/authentication/screens/SetupScreen.tsx';
 import { AuthManager } from '@/features/authentication/AuthManager.ts';
 import { GET_NEEDS_SETUP } from '@/lib/graphql/server/ServerInfoQuery.ts';
+import { requestManager } from '@/lib/requests/RequestManager.ts';
 
 const mockNavigate = vi.fn();
 const mockSetOverride = vi.fn();
-const mockWriteQuery = vi.fn();
 const mockUseQuery = vi.fn();
 const mockUseMutation = vi.fn();
 const setupMutation = vi.fn();
+const mockWriteQuery = vi.spyOn(requestManager.graphQLClient.client, 'writeQuery');
 
 vi.mock('@apollo/client', async () => {
     const actual = await vi.importActual('@apollo/client');
@@ -26,9 +27,6 @@ vi.mock('@apollo/client', async () => {
         ...actual,
         useQuery: (...args: unknown[]) => mockUseQuery(...args),
         useMutation: (...args: unknown[]) => mockUseMutation(...args),
-        useApolloClient: () => ({
-            writeQuery: mockWriteQuery,
-        }),
     };
 });
 

@@ -37,10 +37,12 @@ export const useManageMangaLibraryState = (
 
     const addToLibrary = useCallback(
         (addToCategories: number[] = [], removeFromCategories: number[] = []) => {
+            const hasCategoryChanges = !!addToCategories.length || !!removeFromCategories.length;
+
             requestManager
                 .updateManga(manga.id, {
                     updateManga: { inLibrary: true },
-                    updateMangaCategories: { addToCategories, removeFromCategories },
+                    ...(hasCategoryChanges ? { updateMangaCategories: { addToCategories, removeFromCategories } } : {}),
                 })
                 .response.then(() => makeToast(t('library.info.label.added_to_library'), 'success'))
                 .then(() => setIsInLibrary(true))

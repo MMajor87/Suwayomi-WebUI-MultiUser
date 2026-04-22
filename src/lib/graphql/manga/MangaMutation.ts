@@ -94,6 +94,13 @@ export const UPDATE_MANGA = gql`
         $updateCategoryInput: UpdateMangaCategoriesInput!
         $updateCategories: Boolean!
     ) {
+        updateManga(input: $input) {
+            manga {
+                id
+                inLibrary
+                inLibraryAt
+            }
+        }
         updateMangaCategories(input: $updateCategoryInput) @include(if: $updateCategories) {
             manga {
                 id
@@ -108,13 +115,6 @@ export const UPDATE_MANGA = gql`
                 }
             }
         }
-        updateManga(input: $input) {
-            manga {
-                id
-                inLibrary
-                inLibraryAt
-            }
-        }
     }
 `;
 
@@ -124,9 +124,11 @@ export const UPDATE_MANGAS = gql`
         $updateCategoryInput: UpdateMangasCategoriesInput!
         $updateCategories: Boolean!
     ) {
-        updateMangasCategories(input: $updateCategoryInput) @include(if: $updateCategories) {
+        updateMangas(input: $input) {
             mangas {
                 id
+                inLibrary
+                inLibraryAt
                 categories {
                     nodes {
                         id
@@ -138,11 +140,9 @@ export const UPDATE_MANGAS = gql`
                 }
             }
         }
-        updateMangas(input: $input) {
+        updateMangasCategories(input: $updateCategoryInput) @include(if: $updateCategories) {
             mangas {
                 id
-                inLibrary
-                inLibraryAt
                 categories {
                     nodes {
                         id

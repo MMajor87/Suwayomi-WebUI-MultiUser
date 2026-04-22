@@ -12,14 +12,18 @@ import '@/lib/dayjs/Setup.ts';
 import '@/lib/koration/Setup.ts';
 import '@/index.css';
 import '@/lib/PointerDeviceUtil.ts';
+import { ApolloProvider } from '@apollo/client';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from '@/App';
+import { requestManager } from '@/lib/requests/RequestManager.ts';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
     <StrictMode>
-        <App />
+        <ApolloProvider client={requestManager.graphQLClient.client}>
+            <App />
+        </ApolloProvider>
     </StrictMode>,
 );

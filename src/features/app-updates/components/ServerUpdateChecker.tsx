@@ -51,6 +51,7 @@ export const ServerUpdateChecker = () => {
     );
     const version = aboutServer ? aboutServer.version : undefined;
     const isServerUpdateAvailable = !!selectedServerChannelInfo?.tag && selectedServerChannelInfo.tag !== version;
+    const normalizedRepositoryUrl = aboutServer?.github.replace(/\/+$/, '');
 
     const updateChecker = useUpdateChecker(
         'server',
@@ -60,7 +61,7 @@ export const ServerUpdateChecker = () => {
 
     const changelogUrl =
         aboutServer?.buildType.toLowerCase() === 'stable'
-            ? `https://github.com/Suwayomi/Suwayomi-Server/releases/tag/${aboutServer.version}`
+            ? `${normalizedRepositoryUrl}/releases/tag/${aboutServer.version}`
             : undefined;
 
     const isSameAsCurrent = !version || !serverVersion || serverVersion === version;
